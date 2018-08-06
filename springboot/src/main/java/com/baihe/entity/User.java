@@ -1,9 +1,11 @@
 package com.baihe.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2018/8/3.
  */
-public class User {
+public class User implements Serializable {
     private Integer id;
     private String name;
     private String password;

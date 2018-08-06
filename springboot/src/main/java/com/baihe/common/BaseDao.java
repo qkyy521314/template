@@ -1,4 +1,4 @@
-package com.baihe.dao;
+package com.baihe.common;
 
 import org.apache.ibatis.annotations.Param;
 
