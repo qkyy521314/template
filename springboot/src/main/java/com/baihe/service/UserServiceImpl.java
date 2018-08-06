@@ -2,8 +2,12 @@ package com.baihe.service;
 
 import com.baihe.dao.UserDao;
 import com.baihe.entity.User;
+import com.baihe.kafka.KafkaProducer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.concurrent.ListenableFuture;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -16,6 +20,10 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     public UserDao userDao;
+
+    @Autowired
+    private KafkaProducer kafkaProducer;
+
     @Resource
     private RedisTemplate<Integer, User> redisTemplate;//key value 的泛型
 
@@ -38,7 +46,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(User user) {
+
         userDao.insert(user);
+        kafkaProducer.send("success add "+user);
+
     }
 
     @Override
