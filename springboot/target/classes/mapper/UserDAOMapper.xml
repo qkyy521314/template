@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
 <mapper namespace="com.baihe.dao.UserDao">
 
-    <sql id="selectResult">
+    <sql id="selectResult" >
           id,
           name,
           password,
@@ -25,7 +26,6 @@
 
         </where>
     </sql>
-
 
     <select id="selectAll" resultType="com.baihe.entity.User">
         SELECT
@@ -64,8 +64,8 @@
         WHERE
             id=#{id}
     </update>
-
-    <insert id="insert" parameterType="java.util.List">
+<!-- keyColumn="id" keyProperty="id" useGeneratedKeys="true"  插入后可返回自增id-->
+    <insert id="insert" parameterType="java.util.List" keyColumn="id" keyProperty="id" useGeneratedKeys="true" >
         INSERT INTO user
         (<include refid="selectResult"/>)
         VALUES

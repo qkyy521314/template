@@ -5,9 +5,8 @@ import com.baihe.entity.User;
 import com.baihe.kafka.KafkaProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.concurrent.ListenableFuture;
+
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -46,8 +45,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(User user) {
-
+        Integer before_id = user.getId();
         userDao.insert(user);
+        //在mapper文件做调整 即可返回自增id
+        Integer after_id = user.getId();
+        System.out.println("before_id="+before_id+"   after_id="+after_id);
         kafkaProducer.send("success add "+user);
 
     }
