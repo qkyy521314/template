@@ -1,6 +1,7 @@
 package com.baihe.service;
 
 import com.baihe.dao.UserDao;
+import com.baihe.dao.UserRepository;
 import com.baihe.entity.User;
 import com.baihe.kafka.KafkaProducer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,10 @@ import org.springframework.stereotype.Service;
 
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Administrator on 2018/8/6.
@@ -17,6 +21,8 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
+    @Resource
+    public UserRepository userRepository;
     @Resource
     public UserDao userDao;
 
@@ -45,13 +51,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(User user) {
-        Integer before_id = user.getId();
-        userDao.insert(user);
-        //在mapper文件做调整 即可返回自增id
-        Integer after_id = user.getId();
-        System.out.println("before_id="+before_id+"   after_id="+after_id);
-        kafkaProducer.send("success add "+user);
-
+//        Integer before_id = user.getId();
+//        userDao.insert(user);
+//        //在mapper文件做调整 即可返回自增id
+//        Integer after_id = user.getId();
+//        System.out.println("before_id="+before_id+"   after_id="+after_id);
+//        kafkaProducer.send("success add "+user);
+        System.out.println("add start....."+userRepository);
+        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("yyyyMMddHH");
+        String format = simpleDateFormat.format(new Date());
+        int i = Integer.parseInt(format);
+        user.setId(i);
+        User user1 = userRepository.save(user);
+        System.out.println("add success....."+user1);
     }
 
     @Override

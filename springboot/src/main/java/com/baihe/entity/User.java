@@ -1,12 +1,17 @@
 package com.baihe.entity;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import java.io.Serializable;
 
 /**
  * Created by Administrator on 2018/8/3.
  */
 public class User implements Serializable {
+    @Id
     private Integer id;
+
     private String name;
     private String password;
     private Integer age;

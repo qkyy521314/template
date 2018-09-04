@@ -6,6 +6,7 @@ import com.baihe.service.UserService;
 import org.junit.Test;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2018/8/6.
@@ -25,4 +26,6 @@ public class TestMysql extends BaseTest{
         User user = userService.getOne(1);
         System.out.println(user);
     }
+
+
 }
